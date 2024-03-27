@@ -574,7 +574,7 @@ export default function Calculator() {
                 (AMCRequired3 ?? 0) +
                 (AMCRequired4 ?? 0) +
                 AMCElectiveTotal +
-                VECTotal}
+                (VEC ?? 0)}
             </td>
           </tr>
           <tr>
