@@ -23,11 +23,71 @@ type Credit = {
 };
 
 const credits: Record<string, Credit> = {
+  M: {
+    BMCRequired: 18,
+    BMCElective: 10,
+    AMCRequired: 13,
+    AMCElective: 27,
+  },
+  E: {
+    BMCRequired: 14,
+    BMCElective: 14,
+    AMCRequired: 17,
+    AMCElective: 23,
+  },
+  C: {
+    BMCRequired: 20,
+    BMCElective: 8,
+    AMCRequired: 17,
+    AMCElective: 23,
+  },
+  I: {
+    BMCRequired: 20,
+    BMCElective: 8,
+    AMCRequired: 16,
+    AMCElective: 24,
+  },
+  A: {
+    BMCRequired: 4,
+    BMCElective: 24,
+    AMCRequired: 13,
+    AMCElective: 27,
+  },
+  S: {
+    BMCRequired: 10,
+    BMCElective: 14,
+    AMCRequired: 8,
+    AMCElective: 36,
+  },
+  B: {
+    BMCRequired: 14,
+    BMCElective: 14,
+    AMCRequired: 17,
+    AMCElective: 23,
+  },
+  K: {
+    BMCRequired: 12,
+    BMCElective: 16,
+    AMCRequired: 21,
+    AMCElective: 19,
+  },
+  SD: {
+    BMCRequired: 19,
+    BMCElective: 10,
+    AMCRequired: 12,
+    AMCElective: 27,
+  },
   J: {
     BMCRequired: 12,
     BMCElective: 14,
     AMCRequired: 14,
     AMCElective: 28,
+  },
+  L: {
+    BMCRequired: 24,
+    BMCElective: 4,
+    AMCRequired: 15,
+    AMCElective: 25,
   },
 };
 
@@ -339,37 +399,17 @@ export default function Calculator() {
           onChange={(e) => setDepartment(e.target.value)}
         >
           <option value="">学科を選択</option>
-          <option value="M" disabled>
-            機械工学科
-          </option>
-          <option value="E" disabled>
-            電気情報工学科
-          </option>
-          <option value="C" disabled>
-            応用化学科
-          </option>
-          <option value="I" disabled>
-            物理情報工学科
-          </option>
-          <option value="A" disabled>
-            管理工学科
-          </option>
-          <option value="S" disabled>
-            数理科学科
-          </option>
-          <option value="B" disabled>
-            物理学科
-          </option>
-          <option value="K" disabled>
-            化学科
-          </option>
-          <option value="SD" disabled>
-            システムデザイン工学科
-          </option>
+          <option value="M">機械工学科</option>
+          <option value="E">電気情報工学科</option>
+          <option value="C">応用化学科</option>
+          <option value="I">物理情報工学科</option>
+          <option value="A">管理工学科</option>
+          <option value="S">数理科学科</option>
+          <option value="B">物理学科</option>
+          <option value="K">化学科</option>
+          <option value="SD">システムデザイン工学科</option>
           <option value="J">情報工学科</option>
-          <option value="L" disabled>
-            生命情報工学科
-          </option>
+          <option value="L">生命情報工学科</option>
         </FormSelect>
         <FormSelect
           value={grade ?? ''}
