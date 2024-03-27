@@ -287,17 +287,14 @@ export default function Calculator() {
   } = useStore();
 
   const GECTotal = useMemo(() => {
-    const PE =
-      (GECHiyoshi12PE ?? 0) + (GECHiyoshi34PE ?? 0) <= 2
-        ? (GECHiyoshi12PE ?? 0) + (GECHiyoshi34PE ?? 0)
-        : 2;
+    const PE = (GECHiyoshi12PE ?? 0) + (GECHiyoshi34PE ?? 0);
     return (
       (GECHiyoshi12X ?? 0) +
       (GECHiyoshi12Y ?? 0) +
       (GECHiyoshi34X ?? 0) +
       (GECHiyoshi34Y ?? 0) +
       (GECYagami ?? 0) +
-      PE
+      (PE <= 2 ? PE : 2)
     );
   }, [
     GECHiyoshi12X,
