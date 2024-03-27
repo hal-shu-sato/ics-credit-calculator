@@ -429,6 +429,7 @@ export default function Calculator() {
             <th rowSpan={3}>基礎教育科目</th>
             <th colSpan={4}>専門教育科目</th>
             <th rowSpan={3}>自主選択科目（超過分含む）</th>
+            <th rowSpan={3}>合計</th>
           </tr>
           <tr>
             <th colSpan={2}>専門基礎科目</th>
@@ -457,6 +458,20 @@ export default function Calculator() {
             <td>{(AMCRequired3 ?? 0) + (AMCRequired4 ?? 0)}</td>
             <td>{AMCElectiveTotal}</td>
             <td>{VECTotal}</td>
+            <td>
+              {GECTotal +
+                langTotal +
+                (FCRequired ?? 0) +
+                (FCMath ?? 0) +
+                (FCPhysics ?? 0) +
+                (FCChemistry ?? 0) +
+                (BMCRequired ?? 0) +
+                (BMCElective ?? 0) +
+                (AMCRequired3 ?? 0) +
+                (AMCRequired4 ?? 0) +
+                AMCElectiveTotal +
+                VECTotal}
+            </td>
           </tr>
           <tr>
             <th>卒業条件</th>
@@ -468,6 +483,7 @@ export default function Calculator() {
             <td>{department && credits[department].AMCRequired}</td>
             <td>{department && credits[department].AMCElective}</td>
             <td>8</td>
+            <td>138</td>
           </tr>
         </tbody>
       </Table>
