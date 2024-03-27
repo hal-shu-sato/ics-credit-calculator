@@ -336,7 +336,6 @@ export default function Calculator() {
       <Stack gap={2}>
         <FormSelect
           value={department ?? ''}
-          defaultValue=""
           onChange={(e) => setDepartment(e.target.value)}
         >
           <option value="">学科を選択</option>
@@ -344,7 +343,6 @@ export default function Calculator() {
         </FormSelect>
         <FormSelect
           value={grade ?? ''}
-          defaultValue=""
           onChange={(e) => setGrade(e.target.value)}
         >
           <option value="">学年を選択</option>
@@ -355,7 +353,6 @@ export default function Calculator() {
         </FormSelect>
         <FormSelect
           value={secondLanguage ?? ''}
-          defaultValue=""
           onChange={(e) => setSecondLanguage(e.target.value)}
         >
           <option value="">第二外国語を選択</option>
