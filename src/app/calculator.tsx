@@ -443,7 +443,7 @@ export default function Calculator() {
         </thead>
         <tbody>
           <tr>
-            <td>取得単位数</td>
+            <th>取得単位数</th>
             <td>{GECTotal}</td>
             <td>{langTotal}</td>
             <td>
@@ -459,7 +459,7 @@ export default function Calculator() {
             <td>{VECTotal}</td>
           </tr>
           <tr>
-            <td>卒業条件</td>
+            <th>卒業条件</th>
             <td>18</td>
             <td>16</td>
             <td>28</td>
