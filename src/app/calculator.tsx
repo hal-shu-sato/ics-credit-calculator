@@ -339,7 +339,37 @@ export default function Calculator() {
           onChange={(e) => setDepartment(e.target.value)}
         >
           <option value="">学科を選択</option>
+          <option value="M" disabled>
+            機械工学科
+          </option>
+          <option value="E" disabled>
+            電気情報工学科
+          </option>
+          <option value="C" disabled>
+            応用化学科
+          </option>
+          <option value="I" disabled>
+            物理情報工学科
+          </option>
+          <option value="A" disabled>
+            管理工学科
+          </option>
+          <option value="S" disabled>
+            数理科学科
+          </option>
+          <option value="B" disabled>
+            物理学科
+          </option>
+          <option value="K" disabled>
+            化学科
+          </option>
+          <option value="SD" disabled>
+            システムデザイン工学科
+          </option>
           <option value="J">情報工学科</option>
+          <option value="L" disabled>
+            生命情報工学科
+          </option>
         </FormSelect>
         <FormSelect
           value={grade ?? ''}
