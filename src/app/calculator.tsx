@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import {
   Col,
@@ -12,6 +12,8 @@ import {
   Stack,
   Table,
 } from 'react-bootstrap';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type Credit = {
   BMCRequired: number;
@@ -29,6 +31,15 @@ const credits: Record<string, Credit> = {
   },
 };
 
+const langLabels: Record<string, string> = {
+  germany: '分野：02-01-02 外国語科目 ドイツ語',
+  french: '分野：02-01-03 外国語科目 フランス語',
+  chinese: '分野：02-01-04 外国語科目 中国語',
+  russian: '分野：02-01-05 外国語科目 ロシア語',
+  korean: '分野：02-01-06 外国語科目 朝鮮語',
+  japanese: '分野：02-01-07 外国語科目 日本語',
+};
+
 function CourseInput({
   label,
   value,
@@ -38,7 +49,7 @@ function CourseInput({
 }: {
   label: string;
   value: number | null;
-  setValue: (value: number | null) => void;
+  setValue: (value: string) => void;
   controlId: string;
   max?: string | number;
 }) {
@@ -53,65 +64,227 @@ function CourseInput({
           min={0}
           max={max}
           value={value ?? ''}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (value) {
-              setValue(parseInt(value));
-            } else {
-              setValue(null);
-            }
-          }}
+          onChange={(e) => setValue(e.target.value)}
         />
       </Col>
     </FormGroup>
   );
 }
 
-export default function Calculator() {
-  const [department, setDepartment] = useState<string | null>(null);
-  const [grade, setGrade] = useState<number | null>(null);
-  const [secondLanguage, setSecondLanguage] = useState<string | null>(null);
+interface State {
+  department: string | null;
+  setDepartment: (department: string) => void;
+  grade: number | null;
+  setGrade: (grade: string) => void;
+  secondLanguage: string | null;
+  setSecondLanguage: (secondLanguage: string) => void;
 
   // General Education Course: 総合教育科目
-  const [GECHiyoshi12X, setGECHiyoshi12X] = useState<number | null>(null);
-  const [GECHiyoshi12Y, setGECHiyoshi12Y] = useState<number | null>(null);
-  const [GECHiyoshi12PE, setGECHiyoshi12PE] = useState<number | null>(null);
-  const [GECHiyoshi34X, setGECHiyoshi34X] = useState<number | null>(null);
-  const [GECHiyoshi34Y, setGECHiyoshi34Y] = useState<number | null>(null);
-  const [GECHiyoshi34PE, setGECHiyoshi34PE] = useState<number | null>(null);
-  const [GECYagami, setGECYagami] = useState<number | null>(null);
+  GECHiyoshi12X: number | null;
+  setGECHiyoshi12X: (GECHiyoshi12X: string) => void;
+  GECHiyoshi12Y: number | null;
+  setGECHiyoshi12Y: (GECHiyoshi12Y: string) => void;
+  GECHiyoshi12PE: number | null;
+  setGECHiyoshi12PE: (GECHiyoshi12PE: string) => void;
+  GECHiyoshi34X: number | null;
+  setGECHiyoshi34X: (GECHiyoshi34X: string) => void;
+  GECHiyoshi34Y: number | null;
+  setGECHiyoshi34Y: (GECHiyoshi34Y: string) => void;
+  GECHiyoshi34PE: number | null;
+  setGECHiyoshi34PE: (GECHiyoshi34PE: string) => void;
+  GECYagami: number | null;
+  setGECYagami: (GECYagami: string) => void;
 
   // Language: 言語
-  const [langEnglish, setLangEnglish] = useState<number | null>(null);
-  const [langGermany, setLangGermany] = useState<number | null>(null);
-  const [langFrench, setLangFrench] = useState<number | null>(null);
-  const [langChinese, setLangChinese] = useState<number | null>(null);
-  const [langRussian, setLangRussian] = useState<number | null>(null);
-  const [langKorean, setLangKorean] = useState<number | null>(null);
-  const [langJapanese, setLangJapanese] = useState<number | null>(null);
+  langEnglish: number | null;
+  setLangEnglish: (langEnglish: string) => void;
+  langSecond: number | null;
+  setLangSecond: (langSecond: string) => void;
 
   // Foundational Courses: 基礎教育科目
-  const [FCRequired, setFCRequired] = useState<number | null>(null);
-  const [FCMath, setFCMath] = useState<number | null>(null);
-  const [FCPhysics, setFCPhysics] = useState<number | null>(null);
-  const [FCChemistry, setFCChemistry] = useState<number | null>(null);
+  FCRequired: number | null;
+  setFCRequired: (FCRequired: string) => void;
+  FCMath: number | null;
+  setFCMath: (FCMath: string) => void;
+  FCPhysics: number | null;
+  setFCPhysics: (FCPhysics: string) => void;
+  FCChemistry: number | null;
+  setFCChemistry: (FCChemistry: string) => void;
 
   // Basic Major Courses: 専門基礎科目
-  const [BMCRequired, setBMCRequired] = useState<number | null>(null);
-  const [BMCElective, setBMCElective] = useState<number | null>(null);
+  BMCRequired: number | null;
+  setBMCRequired: (BMCRequired: string) => void;
+  BMCElective: number | null;
+  setBMCElective: (BMCElective: string) => void;
 
   // Advanced Major Courses: 学科専門科目
-  const [AMCRequired3, setAMCRequired3] = useState<number | null>(null);
-  const [AMCRequired4, setAMCRequired4] = useState<number | null>(null);
-  const [AMCElective, setAMCElective] = useState<number | null>(null);
-  const [AMCRelated, setAMCRelated] = useState<number | null>(null);
-  const [AMCGraduation, setAMCGraduation] = useState<number | null>(null);
+  AMCRequired3: number | null;
+  setAMCRequired3: (AMCRequired3: string) => void;
+  AMCRequired4: number | null;
+  setAMCRequired4: (AMCRequired4: string) => void;
+  AMCElective: number | null;
+  setAMCElective: (AMCElective: string) => void;
+  AMCRelated: number | null;
+  setAMCRelated: (AMCRelated: string) => void;
+  AMCGraduation: number | null;
+  setAMCGraduation: (AMCGraduation: string) => void;
 
   // Voluntary Elective Courses: 自主選択科目
-  const [VEC, setVEC] = useState<number | null>(null);
+  VEC: number | null;
+  setVEC: (VEC: string) => void;
 
   // Free Elective Courses: 自由科目
-  const [FEC, setFEC] = useState<number | null>(null);
+  FEC: number | null;
+  setFEC: (FEC: string) => void;
+}
+
+const useStore = create<State>()(
+  persist(
+    (set) => ({
+      department: null,
+      setDepartment: (department: string) => set({ department }),
+      grade: null,
+      setGrade: (grade: string) => {
+        if (grade) {
+          set({ grade: parseInt(grade) });
+        } else {
+          set({ grade: null });
+        }
+      },
+      secondLanguage: null,
+
+      // General Education Course: 総合教育科目
+      setSecondLanguage: (secondLanguage: string) => set({ secondLanguage }),
+      GECHiyoshi12X: null,
+      setGECHiyoshi12X: (GECHiyoshi12X) =>
+        set({ GECHiyoshi12X: parseInt(GECHiyoshi12X) }),
+      GECHiyoshi12Y: null,
+      setGECHiyoshi12Y: (GECHiyoshi12Y) =>
+        set({ GECHiyoshi12Y: parseInt(GECHiyoshi12Y) }),
+      GECHiyoshi12PE: null,
+      setGECHiyoshi12PE: (GECHiyoshi12PE) =>
+        set({ GECHiyoshi12PE: parseInt(GECHiyoshi12PE) }),
+      GECHiyoshi34X: null,
+      setGECHiyoshi34X: (GECHiyoshi34X) =>
+        set({ GECHiyoshi34X: parseInt(GECHiyoshi34X) }),
+      GECHiyoshi34Y: null,
+      setGECHiyoshi34Y: (GECHiyoshi34Y) =>
+        set({ GECHiyoshi34Y: parseInt(GECHiyoshi34Y) }),
+      GECHiyoshi34PE: null,
+      setGECHiyoshi34PE: (GECHiyoshi34PE) =>
+        set({ GECHiyoshi34PE: parseInt(GECHiyoshi34PE) }),
+      GECYagami: null,
+      setGECYagami: (GECYagami) => set({ GECYagami: parseInt(GECYagami) }),
+
+      // Language: 言語
+      langEnglish: null,
+      setLangEnglish: (langEnglish) =>
+        set({ langEnglish: parseInt(langEnglish) }),
+      langSecond: null,
+      setLangSecond: (langSecond) => set({ langSecond: parseInt(langSecond) }),
+
+      // Foundational Courses: 基礎教育科目
+      FCRequired: null,
+      setFCRequired: (FCRequired) => set({ FCRequired: parseInt(FCRequired) }),
+      FCMath: null,
+      setFCMath: (FCMath) => set({ FCMath: parseInt(FCMath) }),
+      FCPhysics: null,
+      setFCPhysics: (FCPhysics) => set({ FCPhysics: parseInt(FCPhysics) }),
+      FCChemistry: null,
+      setFCChemistry: (FCChemistry) =>
+        set({ FCChemistry: parseInt(FCChemistry) }),
+
+      // Basic Major Courses: 専門基礎科目
+      BMCRequired: null,
+      setBMCRequired: (BMCRequired) =>
+        set({ BMCRequired: parseInt(BMCRequired) }),
+      BMCElective: null,
+      setBMCElective: (BMCElective) =>
+        set({ BMCElective: parseInt(BMCElective) }),
+
+      // Advanced Major Courses: 学科専門科目
+      AMCRequired3: null,
+      setAMCRequired3: (AMCRequired3) =>
+        set({ AMCRequired3: parseInt(AMCRequired3) }),
+      AMCRequired4: null,
+      setAMCRequired4: (AMCRequired4) =>
+        set({ AMCRequired4: parseInt(AMCRequired4) }),
+      AMCElective: null,
+      setAMCElective: (AMCElective) =>
+        set({ AMCElective: parseInt(AMCElective) }),
+      AMCRelated: null,
+      setAMCRelated: (AMCRelated) => set({ AMCRelated: parseInt(AMCRelated) }),
+      AMCGraduation: null,
+      setAMCGraduation: (AMCGraduation) =>
+        set({ AMCGraduation: parseInt(AMCGraduation) }),
+
+      // Voluntary Elective Courses: 自主選択科目
+      VEC: null,
+      setVEC: (VEC) => set({ VEC: parseInt(VEC) }),
+
+      // Free Elective Courses: 自由科目
+      FEC: null,
+      setFEC: (FEC) => set({ FEC: parseInt(FEC) }),
+    }),
+    {
+      name: 'calculator-store',
+    },
+  ),
+);
+
+export default function Calculator() {
+  const {
+    department,
+    setDepartment,
+    grade,
+    setGrade,
+    secondLanguage,
+    setSecondLanguage,
+    GECHiyoshi12X,
+    setGECHiyoshi12X,
+    GECHiyoshi12Y,
+    setGECHiyoshi12Y,
+    GECHiyoshi12PE,
+    setGECHiyoshi12PE,
+    GECHiyoshi34X,
+    setGECHiyoshi34X,
+    GECHiyoshi34Y,
+    setGECHiyoshi34Y,
+    GECHiyoshi34PE,
+    setGECHiyoshi34PE,
+    GECYagami,
+    setGECYagami,
+    langEnglish,
+    setLangEnglish,
+    langSecond,
+    setLangSecond,
+    FCRequired,
+    setFCRequired,
+    FCMath,
+    setFCMath,
+    FCPhysics,
+    setFCPhysics,
+    FCChemistry,
+    setFCChemistry,
+    BMCRequired,
+    setBMCRequired,
+    BMCElective,
+    setBMCElective,
+    AMCRequired3,
+    setAMCRequired3,
+    AMCRequired4,
+    setAMCRequired4,
+    AMCElective,
+    setAMCElective,
+    AMCRelated,
+    setAMCRelated,
+    AMCGraduation,
+    setAMCGraduation,
+    VEC,
+    setVEC,
+    FEC,
+    setFEC,
+  } = useStore();
 
   const GECTotal = useMemo(() => {
     const PE =
@@ -137,32 +310,11 @@ export default function Calculator() {
   ]);
 
   const langTotal = useMemo(() => {
-    switch (secondLanguage) {
-      case 'germany':
-        return (langEnglish ?? 0) + (langGermany ?? 0);
-      case 'french':
-        return (langEnglish ?? 0) + (langFrench ?? 0);
-      case 'chinese':
-        return (langEnglish ?? 0) + (langChinese ?? 0);
-      case 'russian':
-        return (langEnglish ?? 0) + (langRussian ?? 0);
-      case 'korean':
-        return (langEnglish ?? 0) + (langKorean ?? 0);
-      case 'japanese':
-        return (langEnglish ?? 0) + (langJapanese ?? 0);
-      default:
-        return langEnglish ?? 0;
+    if (secondLanguage) {
+      return (langEnglish ?? 0) + (langSecond ?? 0);
     }
-  }, [
-    secondLanguage,
-    langEnglish,
-    langGermany,
-    langFrench,
-    langChinese,
-    langRussian,
-    langKorean,
-    langJapanese,
-  ]);
+    return langEnglish ?? 0;
+  }, [secondLanguage, langEnglish, langSecond]);
 
   const AMCElectiveTotal = useMemo(() => {
     const related = (AMCRelated ?? 0) <= 4 ? AMCRelated ?? 0 : 4;
@@ -185,31 +337,31 @@ export default function Calculator() {
   return (
     <>
       <Stack gap={2}>
-        <FormSelect onChange={(e) => setDepartment(e.target.value)}>
-          <option>学科を選択</option>
+        <FormSelect
+          value={department ?? ''}
+          defaultValue=""
+          onChange={(e) => setDepartment(e.target.value)}
+        >
+          <option value="">学科を選択</option>
           <option value="J">情報工学科</option>
         </FormSelect>
         <FormSelect
-          onChange={(e) =>
-            setGrade(
-              e.target.value === '学年を選択' ? null : parseInt(e.target.value),
-            )
-          }
+          value={grade ?? ''}
+          defaultValue=""
+          onChange={(e) => setGrade(e.target.value)}
         >
-          <option selected>学年を選択</option>
+          <option value="">学年を選択</option>
           <option value={4}>4年</option>
           <option value={3}>3年</option>
           <option value={2}>2年</option>
           <option value={1}>1年</option>
         </FormSelect>
         <FormSelect
-          onChange={(e) =>
-            setSecondLanguage(
-              e.target.value === '第二外国語を選択' ? null : e.target.value,
-            )
-          }
+          value={secondLanguage ?? ''}
+          defaultValue=""
+          onChange={(e) => setSecondLanguage(e.target.value)}
         >
-          <option selected>第二外国語を選択</option>
+          <option value="">第二外国語を選択</option>
           <option value="germany">ドイツ語</option>
           <option value="french">フランス語</option>
           <option value="chinese">中国語</option>
@@ -271,57 +423,12 @@ export default function Calculator() {
           controlId="langEnglish"
           max={8}
         />
-        {secondLanguage === 'germany' && (
+        {secondLanguage && (
           <CourseInput
-            label="分野：02-01-02 外国語科目 ドイツ語"
-            value={langGermany}
-            setValue={setLangGermany}
-            controlId="langGermany"
-            max={8}
-          />
-        )}
-        {secondLanguage === 'french' && (
-          <CourseInput
-            label="分野：02-01-03 外国語科目 フランス語"
-            value={langFrench}
-            setValue={setLangFrench}
-            controlId="langFrench"
-            max={8}
-          />
-        )}
-        {secondLanguage === 'chinese' && (
-          <CourseInput
-            label="分野：02-01-04 外国語科目 中国語"
-            value={langChinese}
-            setValue={setLangChinese}
-            controlId="langChinese"
-            max={8}
-          />
-        )}
-        {secondLanguage === 'russian' && (
-          <CourseInput
-            label="分野：02-01-05 外国語科目 ロシア語"
-            value={langRussian}
-            setValue={setLangRussian}
-            controlId="langRussian"
-            max={8}
-          />
-        )}
-        {secondLanguage === 'korean' && (
-          <CourseInput
-            label="分野：02-01-06 外国語科目 朝鮮語"
-            value={langKorean}
-            setValue={setLangKorean}
-            controlId="langKorean"
-            max={8}
-          />
-        )}
-        {secondLanguage === 'japanese' && (
-          <CourseInput
-            label="分野：02-01-07 外国語科目 日本語"
-            value={langJapanese}
-            setValue={setLangJapanese}
-            controlId="langJapanese"
+            label={langLabels[secondLanguage]}
+            value={langSecond}
+            setValue={setLangSecond}
+            controlId="langSecond"
             max={8}
           />
         )}
