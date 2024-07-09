@@ -19,10 +19,10 @@
     "bootstrap": "^5.3.3",
     "next": "^14",
     "react": "^18",
-    "react-bootstrap": "^2.10.2",
+    "react-bootstrap": "^2.10.4",
     "react-dom": "^18",
     "sharp": "^0.33",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^20",
