@@ -17,28 +17,28 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "next": "^14.2.5",
+    "next": "^14.2.15",
     "react": "^18",
-    "react-bootstrap": "^2.10.4",
+    "react-bootstrap": "^2.10.5",
     "react-dom": "^18",
-    "sharp": "^0.33",
-    "zustand": "^4.5.4"
+    "sharp": "^0.33.5",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/node": "^22.7.5",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8",
-    "eslint-config-next": "^14.2.5",
+    "eslint-config-next": "^14.2.15",
     "eslint-config-prettier": "^9",
-    "husky": "^9.1.4",
-    "lint-staged": "^15",
-    "npm-run-all2": "^6",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "npm-run-all2": "^6.2.3",
     "prettier": "^3.3.3",
-    "prettier-plugin-packagejson": "^2.5.1",
-    "typescript": "^5.5.4"
+    "prettier-plugin-packagejson": "^2.5.3",
+    "typescript": "^5.6.3"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
