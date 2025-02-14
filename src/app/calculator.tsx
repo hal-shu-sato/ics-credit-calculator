@@ -374,8 +374,8 @@ export default function Calculator() {
   }, [secondLanguage, langEnglish, langSecond]);
 
   const AMCElectiveTotal = useMemo(() => {
-    const related = (AMCRelated ?? 0) <= 4 ? AMCRelated ?? 0 : 4;
-    const graduation = (AMCGraduation ?? 0) <= 10 ? AMCGraduation ?? 0 : 10;
+    const related = (AMCRelated ?? 0) <= 4 ? (AMCRelated ?? 0) : 4;
+    const graduation = (AMCGraduation ?? 0) <= 10 ? (AMCGraduation ?? 0) : 10;
     return (AMCElective ?? 0) + related + graduation;
   }, [AMCElective, AMCRelated, AMCGraduation]);
 
