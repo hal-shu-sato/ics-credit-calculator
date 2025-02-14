@@ -12,7 +12,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-export default [
+export default tseslint.config(
   {
     ignores: ['**/node_modules/'],
   },
@@ -76,4 +76,4 @@ export default [
     },
   },
   eslintConfigPrettier,
-];
+);
