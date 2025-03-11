@@ -379,17 +379,15 @@ export default function Calculator() {
     return (AMCElective ?? 0) + related + graduation;
   }, [AMCElective, AMCRelated, AMCGraduation]);
 
-  const VECTotal = useMemo(() => {
+  const VECOver = useMemo(() => {
     const GEC = GECTotal - 18 > 0 ? GECTotal - 18 : 0;
     if (department) {
       const BMC = (BMCElective ?? 0) - credits[department].BMCElective;
-      const AMC = AMCElective ?? 0 - credits[department].AMCElective;
-      const over = (BMC > 0 ? BMC : 0) + (AMC > 0 ? AMC : 0);
-      return (VEC ?? 0) + GEC + over;
-    } else {
-      return (VEC ?? 0) + GEC;
+      const AMC = (AMCElective ?? 0) - credits[department].AMCElective;
+      return GEC + (BMC > 0 ? BMC : 0) + (AMC > 0 ? AMC : 0);
     }
-  }, [department, GECTotal, BMCElective, AMCElective, VEC]);
+    return GEC;
+  }, [department, GECTotal, BMCElective, AMCElective]);
 
   return (
     <>
@@ -599,7 +597,7 @@ export default function Calculator() {
             <th rowSpan={3}>外国語科目</th>
             <th rowSpan={3}>基礎教育科目</th>
             <th colSpan={4}>専門教育科目</th>
-            <th rowSpan={3}>自主選択科目（超過分含む）</th>
+            <th rowSpan={3}>自主選択科目</th>
             <th rowSpan={3}>合計</th>
           </tr>
           <tr>
@@ -628,7 +626,9 @@ export default function Calculator() {
             <td>{BMCElective ?? 0}</td>
             <td>{(AMCRequired3 ?? 0) + (AMCRequired4 ?? 0)}</td>
             <td>{AMCElectiveTotal}</td>
-            <td>{VECTotal}</td>
+            <td>
+              {VEC}+{VECOver}
+            </td>
             <td>
               {GECTotal +
                 langTotal +
