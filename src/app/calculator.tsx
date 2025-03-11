@@ -455,25 +455,25 @@ export default function Calculator() {
         {grade && grade >= 3 && (
           <>
             <CourseInput
-              label="分野：01-01-14 総合教育科目 系列Ｘ（人文・社会・学際系列）"
+              label="分野：01-01-14 総合教育科目 第３・４学年設置科目 系列Ｘ（人文・社会・学際系列）"
               value={GECHiyoshi34X}
               setValue={setGECHiyoshi34X}
               controlId="GECHiyoshi34X"
             />
             <CourseInput
-              label="分野：01-01-15 総合教育科目 系列Ｙ（自然科学系列・総合教育セミナー・外国語）"
+              label="分野：01-01-15 総合教育科目 第３・４学年設置科目 系列Ｙ（自然科学系列・総合教育セミナー・外国語）"
               value={GECHiyoshi34Y}
               setValue={setGECHiyoshi34Y}
               controlId="GECHiyoshi34Y"
             />
             <CourseInput
-              label="分野：01-01-16 総合教育科目 体育実技科目"
+              label="分野：01-01-16 総合教育科目 第３・４学年設置科目 体育実技科目"
               value={GECHiyoshi34PE}
               setValue={setGECHiyoshi34PE}
               controlId="GECHiyoshi34PE"
             />
             <CourseInput
-              label="分野：01-02-11 総合教育科目 矢上設置科目"
+              label="分野：01-02-11 総合教育科目 第３・４学年設置科目"
               value={GECYagami}
               setValue={setGECYagami}
               controlId="GECYagami"
