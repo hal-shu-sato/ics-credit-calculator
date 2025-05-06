@@ -16,7 +16,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "bootstrap": "^5.3.5",
+    "bootstrap": "^5.3.6",
     "next": "^15.3.1",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.9",
